@@ -1,5 +1,2 @@
 ﻿  main.cpp
-  ResourceManager.cpp
-  Generating Code...
-ResourceManager.obj : error LNK2019: unresolved external symbol "private: __cdecl ResourceManager::ResourceManager(class ResourceManager const &)" (??0ResourceManager@@AEAA@AEBV0@@Z) referenced in function "private: class ResourceManager __cdecl ResourceManager::operator=(class ResourceManager const &)" (??4ResourceManager@@AEAA?AV0@AEBV0@@Z)
-C:\DEV\absolutepixel\x64\Debug\absolutepixel.exe : fatal error LNK1120: 1 unresolved externals
+  absolutepixel.vcxproj -> C:\DEV\absolutepixel\x64\Debug\absolutepixel.exe

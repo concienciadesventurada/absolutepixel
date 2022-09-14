@@ -5,6 +5,11 @@ ResourceManager::ResourceManager()
 
 }
 
+ResourceManager::ResourceManager(ResourceManager const&)
+{
+
+}
+
 ResourceManager ResourceManager::operator=(ResourceManager const& rhs)
 {
     //TO DO: Although it is not necessary in a singleton.
