@@ -34,12 +34,8 @@ int main(int argc, char* argv[]) {
     SDL_Renderer* renderer = nullptr;
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
-
-    AnimatedSprite animatedSprite(renderer, "assets/player_idle-walking.bmp");
-    AnimatedSprite tim(renderer, "assets/tim_idle.bmp");
-    animatedSprite.Draw(200, 200, 128, 128);
-    tim.Draw(300, 200, 128, 128);
-
+    TexturedRectangle object1(renderer, "assets/player_idle-walking.bmp");
+    TexturedRectangle object2(renderer, "assets/tim_idle.bmp");
 
     // Infinite loop for our application
     bool gameIsRunning = true;
@@ -49,10 +45,29 @@ int main(int argc, char* argv[]) {
 
         // (1) Handle Input
         // Start our event loop
+
+        int mouseX, mouseY;
+
+        Uint32 buttons;
+        buttons = SDL_GetMouseState(&mouseX, &mouseY);
+
         while (SDL_PollEvent(&event)) {
             // Handle each specific event
             if (event.type == SDL_QUIT) {
                 gameIsRunning = false;
+            }
+
+            // Detect collision from two shapes if moused button is pressed.
+            if (event.button.button == SDL_BUTTON_LEFT)
+            {
+                if (object2.IsColliding(object1))
+                {
+                    std::cout << "Is colliding\n";
+                }
+                else
+                {
+                    std::cout << "Is not colliding\n";
+                }
             }
         }
         // (2) Handle Updates
@@ -65,17 +80,11 @@ int main(int argc, char* argv[]) {
         // Do our drawing
         SDL_SetRenderDrawColor(renderer, 0, 0, 255, SDL_ALPHA_OPAQUE);
 
-        static int frameNumber = 0; // Counter to choose which frame we're on.
+        object1.Draw(100, 100, 64, 64);
+        object2.Draw(mouseX, mouseY, 64, 64);
 
-        animatedSprite.PlayFrame(0, 0, 32, 32, frameNumber);
-        animatedSprite.Render(renderer);
-        tim.PlayFrame(128, 0, 32, 32, frameNumber);
-        tim.Render(renderer);
-        frameNumber++;
-        if (frameNumber > 8) {
-            frameNumber = 0;
-        }
-
+        object1.Render(renderer);
+        object2.Render(renderer);          
 
         // Finally show what we've drawn
         SDL_RenderPresent(renderer);
@@ -91,5 +100,6 @@ int main(int argc, char* argv[]) {
 
     // our program.
     SDL_Quit();
+
     return 0;
 }
