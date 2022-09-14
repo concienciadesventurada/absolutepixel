@@ -146,9 +146,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Motor 2D\Motor 2D\src\main.cpp" />
+    <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="TexturedRectangle.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="TexturedRectangle.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

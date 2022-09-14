@@ -1,12 +1,15 @@
 #include <string>
 #include "SDL.h"
 #include "TexturedRectangle.h"
+#include "ResourceManager.h"
 
 // Constructor
-TexturedRectangle::TexturedRectangle(SDL_Renderer*& renderer, std::string filepath) {
-    SDL_Surface* surface = SDL_LoadBMP(filepath.c_str());
-    m_texture = SDL_CreateTextureFromSurface(renderer, surface);
-    SDL_FreeSurface(surface);
+TexturedRectangle::TexturedRectangle(SDL_Renderer*& renderer, std::string filepath) 
+{
+    SDL_Surface* retrieveSurface = ResourceManager::GetInstance().GetSurface("assets/player_still.bmp");
+
+    m_texture = SDL_CreateTextureFromSurface(renderer, retrieveSurface);
+//    SDL_FreeSurface(retrieveSurface); // EJERCICIO: Crear un método que libere la memoria
 }
 // Destructor
 TexturedRectangle::~TexturedRectangle() {
