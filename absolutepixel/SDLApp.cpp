@@ -4,6 +4,12 @@
 
 SDLApp::SDLApp(const char* title, int x, int y, int w, int h)
 {
+    m_width = w;
+    m_height = h;
+
+    // Default value
+    m_maxFrameRate = 60;
+
     // Initialize the video subsystem.
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         std::cout << "SDL could not be initialized: " <<
@@ -40,6 +46,7 @@ void SDLApp::RunLoop()
 {
     while (m_gameIsRunning)
     {
+        Uint32 start = SDL_GetTicks();
 
         Uint32 buttons;
         buttons = SDL_GetMouseState(&m_mouseX, &m_mouseY);
@@ -64,9 +71,20 @@ void SDLApp::RunLoop()
         // Finally show what we've drawn
         SDL_RenderPresent(m_renderer);
 
-        // TODO: Eventually set a frame cap
-        SDL_Delay(150);
+        // Frame capping in milliseconds
+        Uint32 elapsedTime = SDL_GetTicks() - start;
+        if (elapsedTime < m_maxFrameRate)
+        {
+            SDL_Delay(m_maxFrameRate - elapsedTime);
+        }
+        
     }
+
+}
+
+void SDLApp::SetMaxFrameRate(int frameRate)
+{
+    m_maxFrameRate = frameRate;
 }
 
 SDL_Renderer* SDLApp::GetRenderer() const
@@ -82,6 +100,16 @@ int SDLApp::GetMouseX()
 int SDLApp::GetMouseY()
 {
 	return m_mouseY;
+}
+
+int SDLApp::GetWindowWidth()
+{
+    return m_width;
+}
+
+int SDLApp::GetWindowHeight()
+{
+    return m_height;
 }
 
 void SDLApp::StopAppLoop()

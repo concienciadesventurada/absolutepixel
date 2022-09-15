@@ -25,6 +25,9 @@ public:
     // Loop our application
     void RunLoop();
 
+    // Frame cap - maximum render frame rate.
+    void SetMaxFrameRate(int frameRate);
+
     // Retrive the renderer
     SDL_Renderer* GetRenderer() const;
 
@@ -32,8 +35,13 @@ public:
     int GetMouseX();
     int GetMouseY();
 
+    // Return window dimensions
+    int GetWindowWidth();
+    int GetWindowHeight();
+
     // Stop the main loop of our application
     void StopAppLoop();
+
 
 private:
     // Pointer to our SDL Window
@@ -45,8 +53,14 @@ private:
     // Infinite loop for our application
     bool m_gameIsRunning = true;
 
+    // Store frame cap
+    int m_maxFrameRate;
+
     // Store mouse Coordinates by default
     int m_mouseX, m_mouseY;
+
+    // Store width and height of window
+    int m_width, m_height;
 
     // Store our callback functions
     std::function<void(void)> m_EventCallback;

@@ -45,10 +45,53 @@ void HandleEvents()
 void HandleRendering()
 {
     // Set draw positions and size
-    player->GetSprite().SetPosition(100, 100);
+    player->GetSprite().SetPosition(app->GetMouseX(), app->GetMouseY());
     player->GetSprite().SetDimensions(128, 128);
-    tim->GetSprite().SetPosition(app->GetMouseX(), app->GetMouseY());
+
+    // DVD Screensaver effect.
+
+    static int posX = 0, posY = 0;
+    static bool up = true, right = true;
+
+    if (up)
+    {
+        --posY; // If the "modern" way, --posY, 
+    }
+    else
+    {
+        ++posY;
+    }
+
+    if (right)
+    {
+        ++posX;
+    }
+    else
+    {
+        --posX;
+    }
+
+    if (posX > app->GetWindowWidth())
+    {
+        right = false;
+    }
+    else if (posX < 0)
+    {
+        right = true;
+    }
+
+    if (posY < 0)
+    {
+        up = false;
+    }
+    else if (posY > app->GetWindowHeight())
+    {
+        up = true;
+    }
+
+    tim->GetSprite().SetPosition(posX, posY);
     tim->GetSprite().SetDimensions(128, 128);
+
 
     // Render our objects
     player->Render();
@@ -61,6 +104,7 @@ int main(int argc, char* argv[])
     // Setup the SDLApp
     const char* title = "SDL2 Abstraction";
     app = new SDLApp(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480);
+    app->SetMaxFrameRate(4);
 
     // Create any objects in our scene
     player = new GameEntity(app->GetRenderer(), "assets/player_still.bmp");
