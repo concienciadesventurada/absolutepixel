@@ -5,7 +5,7 @@
 class TexturedRectangle {
 public:
     // Constructor
-    TexturedRectangle(SDL_Renderer*& renderer, std::string filepath);
+    TexturedRectangle(SDL_Renderer* renderer, std::string filepath);
     // Destructor
     ~TexturedRectangle();
 
@@ -16,7 +16,7 @@ public:
     // Update every frame
     void Update();
     // Render
-    void Render(SDL_Renderer*& renderer);
+    void Render(SDL_Renderer* renderer);
 
 private:
     inline SDL_Rect GetRectangle() const { return m_rectangle; }

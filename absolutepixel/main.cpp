@@ -1,105 +1,75 @@
-// C++ Standard Libraries
 #include <iostream>
 #include <string>
 #include <vector>
 #include <memory>
-// Third Party
-#include <SDL.h> 
 
+#include "SDLApp.h"
 #include "TexturedRectangle.h"
 #include "AnimatedSprite.h"
 
+// One possibility of creating as a global our app
+SDLApp* app;
 
-int main(int argc, char* argv[]) {
-    // Create a window data type
-    // This pointer will point to the 
-    // window that is allocated from SDL_CreateWindow
-    SDL_Window* window = nullptr;
+// Create two objects to render. Eventually, we will want some sort of factory to manage object creation in our App...
+TexturedRectangle* player;
+TexturedRectangle* tim;
 
-    // Initialize the video subsystem.
-    // iF it returns less than 1, then an
-    // error code will be received.
-    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-        std::cout << "SDL could not be initialized: " <<
-            SDL_GetError();
-    }
-    else {
-        std::cout << "SDL video system is ready to go\n";
-    }
-    // Request a window to be created for our platform
-    // The parameters are for the title, x and y position,
-    // and the width and height of the window.
-    window = SDL_CreateWindow("C++ SDL2 Window", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, SDL_WINDOW_SHOWN);
+void HandleEvents() 
+{
+    SDL_Event event;
 
-    SDL_Renderer* renderer = nullptr;
-    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-
-    TexturedRectangle object1(renderer, "assets/player_idle-walking.bmp");
-    TexturedRectangle object2(renderer, "assets/tim_idle.bmp");
-
-    // Infinite loop for our application
-    bool gameIsRunning = true;
-    // Main application loop
-    while (gameIsRunning) {
-        SDL_Event event;
-
-        // (1) Handle Input
-        // Start our event loop
-
-        int mouseX, mouseY;
-
-        Uint32 buttons;
-        buttons = SDL_GetMouseState(&mouseX, &mouseY);
-
-        while (SDL_PollEvent(&event)) {
-            // Handle each specific event
-            if (event.type == SDL_QUIT) {
-                gameIsRunning = false;
+    // (1) Handle Input --- Start our event loop
+    while (SDL_PollEvent(&event)) {
+        // Handle each specific event
+        if (event.type == SDL_QUIT) {
+            app->StopAppLoop();
+        }
+        // Detect collision from our two shapes if mouse
+        // button is pressed
+        if (event.button.button == SDL_BUTTON_LEFT) {
+            if (tim->IsColliding(*player)) {
+                std::cout << "Is colliding\n";
             }
-
-            // Detect collision from two shapes if moused button is pressed.
-            if (event.button.button == SDL_BUTTON_LEFT)
-            {
-                if (object2.IsColliding(object1))
-                {
-                    std::cout << "Is colliding\n";
-                }
-                else
-                {
-                    std::cout << "Is not colliding\n";
-                }
+            else {
+                std::cout << "Not colliding\n";
             }
         }
-        // (2) Handle Updates
-
-        // (3) Clear and Draw the Screen
-        // Gives us a clear "canvas"
-        SDL_SetRenderDrawColor(renderer, 0, 0, 255, SDL_ALPHA_OPAQUE);
-        SDL_RenderClear(renderer);
-
-        // Do our drawing
-        SDL_SetRenderDrawColor(renderer, 0, 0, 255, SDL_ALPHA_OPAQUE);
-
-        object1.Draw(100, 100, 64, 64);
-        object2.Draw(mouseX, mouseY, 64, 64);
-
-        object1.Render(renderer);
-        object2.Render(renderer);          
-
-        // Finally show what we've drawn
-        SDL_RenderPresent(renderer);
-
-        SDL_Delay(150);
     }
+}
 
-    // We destroy our window. We are passing in the pointer
-    // that points to the memory allocated by the 
-    // 'SDL_CreateWindow' function. Remember, this is
-    // a 'C-style' API, we don't have destructors.
-    SDL_DestroyWindow(window);
+void HandleRendering()
+{
+    // Set draw positions and size
+    player->Draw(50, 50, 100, 100);
+    tim->Draw(app->GetMouseX(), app->GetMouseY(), 100, 100);
 
-    // our program.
-    SDL_Quit();
+    // Render our objects
+    player->Render(app->GetRenderer());
+    tim->Render(app->GetRenderer());
+}
+
+
+int main(int argc, char* argv[]) 
+{
+    // Setup the SDLApp
+    const char* title = "SDL2 Abstraction";
+    app = new SDLApp(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480);
+
+    // Create any objects in our scene
+    player = new TexturedRectangle(app->GetRenderer(), "assets/player_still.bmp");
+    tim = new TexturedRectangle(app->GetRenderer(), "assets/tim_still.bmp");
+
+    // Set callback functions
+    app->SetEventCallback(HandleEvents);
+    app->SetRenderCallback(HandleRendering);
+
+    // Run our application until terminated
+    app->RunLoop();
+
+    // Clean up our application
+    delete app;
+    delete player;
+    delete tim;
 
     return 0;
 }

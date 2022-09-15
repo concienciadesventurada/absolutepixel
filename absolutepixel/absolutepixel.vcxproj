@@ -148,11 +148,13 @@
     <ClCompile Include="AnimatedSprite.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
+    <ClCompile Include="SDLApp.cpp" />
     <ClCompile Include="TexturedRectangle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimatedSprite.h" />
     <ClInclude Include="ResourceManager.h" />
+    <ClInclude Include="SDLApp.h" />
     <ClInclude Include="TexturedRectangle.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
