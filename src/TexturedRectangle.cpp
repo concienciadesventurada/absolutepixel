@@ -35,17 +35,32 @@ void TexturedRectangle::SetDimensions(int w, int h)
     m_rectangle.h = h;
 }
 
-SDL_bool TexturedRectangle::IsColliding(TexturedRectangle& obj)
+int TexturedRectangle::GetPositionX()
 {
-    const SDL_Rect temp = obj.GetRectangle();
-    return SDL_HasIntersection(&m_rectangle, &temp);  
+    return m_rectangle.x;
+}
+
+int TexturedRectangle::GetPositionY()
+{
+    return m_rectangle.y;
+}
+
+int TexturedRectangle::GetWidth()
+{
+    return m_rectangle.w;
+}
+
+int TexturedRectangle::GetHeight()
+{
+    return m_rectangle.h;
 }
 
 void TexturedRectangle::Update() {
 
 }
 
-void TexturedRectangle::Render(SDL_Renderer* renderer) {
+void TexturedRectangle::Render(SDL_Renderer* renderer)
+{
     SDL_RenderCopy(renderer, m_texture, NULL, &m_rectangle);
 }
 

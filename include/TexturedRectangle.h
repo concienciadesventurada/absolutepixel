@@ -15,7 +15,13 @@ public:
 
     void SetDimensions(int w, int h);
 
-    SDL_bool IsColliding(TexturedRectangle& obj);
+    // Retrieve position coordinates.
+    int GetPositionX();
+    int GetPositionY();
+
+    // Retrieve dimensions
+    int GetWidth();
+    int GetHeight();
         
     // Update every frame
     void Update();
@@ -24,6 +30,7 @@ public:
 
 private:
     inline SDL_Rect GetRectangle() const { return m_rectangle; }
+    
     SDL_Rect m_rectangle;
     SDL_Texture* m_texture;
 };

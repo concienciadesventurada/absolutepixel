@@ -3,11 +3,6 @@
 #include <vector>
 #include <memory>
 
-/* #include <../include/SDLApp.h>
-#include <../include/TexturedRectangle.h>
-#include "../include/AnimatedSprite.h"
-#include "../include/GameEntity.h" */
-
 #include "SDLApp.h"
 #include "TexturedRectangle.h"
 #include "AnimatedSprite.h"
@@ -34,8 +29,9 @@ void HandleEvents()
 
         // Detect collision from our two shapes if mouse
         // button is pressed
-        if (event.button.button == SDL_BUTTON_LEFT) {
-            if (tim->GetSprite().IsColliding(player->GetSprite())) 
+        if (event.button.button == SDL_BUTTON_LEFT) 
+        {   //tim->GetCollider2D().IsColliding(player->GetCollider2D())
+            if (tim->GetCollider2D().IsColliding(player->GetCollider2D()))
             {
                 std::cout << "Is colliding\n";
             }
@@ -45,6 +41,13 @@ void HandleEvents()
         }
 
     }
+}
+
+// To keep track and update collisions
+void HandleUpdate()
+{
+    player->Update();
+    tim->Update();
 }
 
 void HandleRendering()
@@ -117,6 +120,7 @@ int main(int argc, char* argv[])
 
     // Set callback functions
     app->SetEventCallback(HandleEvents);
+    app->SetUpdateCallback(HandleUpdate);
     app->SetRenderCallback(HandleRendering);
 
     // Run our application until terminated

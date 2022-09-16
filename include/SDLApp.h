@@ -19,6 +19,9 @@ public:
     // Handle Events
     void SetEventCallback(std::function<void(void)> func);
 
+    // Handle Updates
+    void SetUpdateCallback(std::function<void(void)> func);
+
     // Handle Render
     void SetRenderCallback(std::function<void(void)> func);
 
@@ -64,6 +67,7 @@ private:
 
     // Store our callback functions
     std::function<void(void)> m_EventCallback;
+    std::function<void(void)> m_UpdateCallback;
     std::function<void(void)> m_RenderCallback;
 };
 
