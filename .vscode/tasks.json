@@ -2,14 +2,25 @@
     "tasks": [
         {
             "type": "cppbuild",
-            "label": "C/C++: g++ build active file",
-            "command": "/usr/bin/g++",
+            "label": "C/C++: clang++ build active file",
+            "command": "/usr/bin/clang++",
             "args": [
-                "-fdiagnostics-color=always",
+                "-fcolor-diagnostics",
+                "-fansi-escape-codes",
                 "-g",
-                "${file}",
+                "$(find",
+                ".",
+                "-type",
+                "f",
+                "-iregex",
+                "'.*\\.cpp')",
+                "-I",
+                "/home/matias/cpp/vscode/absolutepixel/include",
+                "-lSDL2",
+                "-lSDL2_image",
+                "-ldl",
                 "-o",
-                "${fileDirname}/${fileBasenameNoExtension}"
+                "/home/matias/cpp/vscode/absolutepixel/bin/prog"
             ],
             "options": {
                 "cwd": "${fileDirname}"

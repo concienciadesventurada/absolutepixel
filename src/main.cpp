@@ -3,6 +3,11 @@
 #include <vector>
 #include <memory>
 
+/* #include <../include/SDLApp.h>
+#include <../include/TexturedRectangle.h>
+#include "../include/AnimatedSprite.h"
+#include "../include/GameEntity.h" */
+
 #include "SDLApp.h"
 #include "TexturedRectangle.h"
 #include "AnimatedSprite.h"
@@ -11,7 +16,7 @@
 // One possibility of creating as a global our app
 SDLApp* app;
 
-// Create two objects to render. Eventually, we will want some sort of factory to manage object creation in our App...
+// Create two objects tso render. Eventually, we will want some sort of factory to manage object creation in our App...
 GameEntity* player;
 GameEntity* tim;
 
@@ -107,8 +112,8 @@ int main(int argc, char* argv[])
     app->SetMaxFrameRate(4);
 
     // Create any objects in our scene
-    player = new GameEntity(app->GetRenderer(), "assets/player_still.bmp");
-    tim = new GameEntity(app->GetRenderer(), "assets/tim_still.bmp");
+    player = new GameEntity(app->GetRenderer(), "./assets/player_still.bmp");
+    tim = new GameEntity(app->GetRenderer(), "./assets/tim_still.bmp");
 
     // Set callback functions
     app->SetEventCallback(HandleEvents);

@@ -1,3 +1,4 @@
+#include <string>
 #include "ResourceManager.h"
 
 ResourceManager::ResourceManager()
@@ -39,7 +40,7 @@ SDL_Surface* ResourceManager::GetSurface(std::string filepath)
         SDL_Surface* surface = SDL_LoadBMP(filepath.c_str());
         m_surfaces.insert(std::make_pair(filepath, surface));   // Crea un par de acuerdo a las keys
 
-        return m_surfaces[filepath];    // Lo añade al mapa
+        return m_surfaces[filepath];    // Lo aï¿½ade al mapa
 
     }
 

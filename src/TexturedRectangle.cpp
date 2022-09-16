@@ -1,14 +1,16 @@
 #include <string>
-#include "SDL.h"
 #include "TexturedRectangle.h"
 #include "ResourceManager.h"
+
+// Third Party
+#include <SDL2/SDL.h>
 
 // Constructor
 TexturedRectangle::TexturedRectangle(SDL_Renderer* renderer, std::string filepath) 
 {
     SDL_Surface* retrieveSurface = ResourceManager::GetInstance().GetSurface(filepath);
     m_texture = SDL_CreateTextureFromSurface(renderer, retrieveSurface);
-//    SDL_FreeSurface(retrieveSurface); // EJERCICIO: Crear un método que libere la memoria
+//    SDL_FreeSurface(retrieveSurface); // EJERCICIO: Crear un mï¿½todo que libere la memoria
 
     m_rectangle.x = 0;  // Defaults to render if no parameterers passed.
     m_rectangle.y = 0;

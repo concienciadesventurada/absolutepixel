@@ -1,5 +1,7 @@
 #pragma once
 #include <string>
+
+// Third Party
 #include <SDL2/SDL.h>
 
 class TexturedRectangle {
