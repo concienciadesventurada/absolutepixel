@@ -1,0 +1,21 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "/home/matias/cpp/git/absolutepixel/include"
+            ],
+            "defines": [],
+            "compilerPath": "/usr/bin/g++",
+            "cStandard": "c17",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "linux-gcc-x64",
+            "configurationProvider": "ms-vscode.cmake-tools",
+            "compilerArgs": [
+                "g++ -std=c++17 main.cpp -o prog -lSDL2 -lSDL2_image -ldl"
+            ]
+        }
+    ],
+    "version": 4
+}

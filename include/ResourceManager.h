@@ -4,7 +4,7 @@
 #include <unordered_map>
 
 // Third Party
-#include "SDL.h"
+#include <SDL2/SDL.h>
 
 class ResourceManager
 {
@@ -16,7 +16,7 @@ private:
 	std::unordered_map<std::string, SDL_Surface*> m_surfaces;	// UN_MAP que utiliza como key la ruta de la imagen a cargar.
 
 public:
-	static ResourceManager& GetInstance();	// Retorna una referencia a algún RM.
+	static ResourceManager& GetInstance();	// Retorna una referencia a algï¿½n RM.
 
 	SDL_Surface* GetSurface(std::string filepath);	// Retrieves a particular instance
 
