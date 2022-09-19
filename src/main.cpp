@@ -31,7 +31,7 @@ void HandleEvents()
         // button is pressed
         if (event.button.button == SDL_BUTTON_LEFT) 
         {   //tim->GetCollider2D().IsColliding(player->GetCollider2D())
-            if (tim->GetCollider2D().IsColliding(player->GetCollider2D()))
+            if (tim->GetCollider2D(0).IsColliding(player->GetCollider2D(0)))
             {
                 std::cout << "Is colliding\n";
             }
@@ -48,6 +48,9 @@ void HandleUpdate()
 {
     player->Update();
     tim->Update();
+
+    player->GetCollider2D(0);
+    tim->GetCollider2D(1);
 }
 
 void HandleRendering()
@@ -115,8 +118,12 @@ int main(int argc, char* argv[])
     app->SetMaxFrameRate(4);
 
     // Create any objects in our scene
-    player = new GameEntity(app->GetRenderer(), "./assets/player_still.bmp");
-    tim = new GameEntity(app->GetRenderer(), "./assets/tim_still.bmp");
+    player = new GameEntity(app->GetRenderer());
+    player->AddTexturedRectangleComponent("./assets/player_still.bmp");
+    player->AddCollider2D();
+    tim = new GameEntity(app->GetRenderer());
+    tim->AddTexturedRectangleComponent("./assets/tim_still.bmp", 255, 255, 255);
+    tim->AddCollider2D();
 
     // Set callback functions
     app->SetEventCallback(HandleEvents);

@@ -11,12 +11,36 @@ TexturedRectangle::TexturedRectangle(SDL_Renderer* renderer, std::string filepat
     SDL_Surface* retrieveSurface = ResourceManager::GetInstance().GetSurface(filepath);
     m_texture = SDL_CreateTextureFromSurface(renderer, retrieveSurface);
 //    SDL_FreeSurface(retrieveSurface); // EJERCICIO: Crear un m�todo que libere la memoria
+    InitDefaults();
+}
 
+TexturedRectangle::TexturedRectangle(SDL_Renderer* renderer, std::string filepath, int redColorKey, int greenColorKey, int blueColorKey)
+{
+    SDL_Surface* retrieveSurface = ResourceManager::GetInstance().GetSurface(filepath);
+
+    SDL_SetColorKey(retrieveSurface, SDL_FALSE, SDL_MapRGB(retrieveSurface->format, redColorKey, greenColorKey, blueColorKey));
+
+    m_texture = SDL_CreateTextureFromSurface(renderer, retrieveSurface);
+//    SDL_FreeSurface(retrieveSurface); // EJERCICIO: Crear un m�todo que libere la memoria
+    InitDefaults();
+
+    m_redColorKey = redColorKey;
+    m_greenColorKey = greenColorKey;
+    m_blueColorKey = blueColorKey;
+}
+
+void TexturedRectangle::InitDefaults()
+{
     m_rectangle.x = 0;  // Defaults to render if no parameterers passed.
     m_rectangle.y = 0;
     m_rectangle.w = 32;
     m_rectangle.h = 32;
+
+    m_redColorKey = 0xFF;   // Defaults if no color key parameters provided.
+    m_greenColorKey = 0x00;
+    m_blueColorKey = 0xFF;
 }
+
 
 // Destructor
 TexturedRectangle::~TexturedRectangle() {
@@ -60,7 +84,7 @@ void TexturedRectangle::Update() {
 }
 
 void TexturedRectangle::Render(SDL_Renderer* renderer)
-{
+{   
     SDL_RenderCopy(renderer, m_texture, NULL, &m_rectangle);
 }
 

@@ -9,18 +9,9 @@
 class Collider2D
 {
 public:
-    Collider2D()
-    {
-        m_colliderRectangle.x = 0;
-        m_colliderRectangle.y = 0;
-        m_colliderRectangle.w = 0;
-        m_colliderRectangle.h = 0;
-    }
+    Collider2D();
 
-    ~Collider2D()
-    {
-
-    }
+    ~Collider2D();
 
     SDL_Rect& GetColliderBoundingBox();
 
@@ -41,7 +32,7 @@ public:
     void Render();
 
 private:
-    SDL_Rect m_colliderRectangle;
+    SDL_Rect* m_colliderRectangle;
 
 };
 

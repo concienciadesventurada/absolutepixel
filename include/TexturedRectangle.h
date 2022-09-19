@@ -8,11 +8,15 @@ class TexturedRectangle {
 public:
     // Constructor
     TexturedRectangle(SDL_Renderer* renderer, std::string filepath);
+    // New constructor to parse SDL_SetColorKey / goes along with InitDefaults when not necessary
+    TexturedRectangle(SDL_Renderer* renderer, std::string filepath, int redColorKey, int greenColorKey, int blueColorKey); 
+    void InitDefaults();
+
     // Destructor
     ~TexturedRectangle();
 
+    // Set position and dimensions
     void SetPosition(int x, int y);
-
     void SetDimensions(int w, int h);
 
     // Retrieve position coordinates.
@@ -33,4 +37,6 @@ private:
     
     SDL_Rect m_rectangle;
     SDL_Texture* m_texture;
+
+    int m_redColorKey, m_greenColorKey, m_blueColorKey;
 };
