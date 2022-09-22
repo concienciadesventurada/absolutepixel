@@ -11,7 +11,7 @@
 class SDLApp {
 public:
     // Constructor
-    SDLApp(const char* title, int x, int y, int w, int h);
+    SDLApp(Uint32 subsystemsFlags, const char* title, int x, int y, int w, int h);
 
     // Destructor
     ~SDLApp();

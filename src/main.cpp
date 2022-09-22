@@ -9,6 +9,7 @@
 #include "GameEntity.h"
 #include "Vector2D.h"
 #include "ResourceManager.h"
+#include "Sound.h"
 
 // One possibility of creating as a global our app
 SDLApp* app;
@@ -16,6 +17,8 @@ SDLApp* app;
 // Create two objects tso render. Eventually, we will want some sort of factory to manage object creation in our App...
 GameEntity* player;
 GameEntity* tim;
+
+Sound* CollisionSound;
 
 void HandleEvents() 
 {
@@ -36,6 +39,7 @@ void HandleEvents()
             if (tim->GetBoxCollider2D(0).IsColliding(player->GetBoxCollider2D(0)))
             {
                 std::cout << "1: Is colliding\n";
+                CollisionSound->PlaySound();
             }
             else {
                 std::cout << "1: Not colliding\n";
@@ -44,6 +48,7 @@ void HandleEvents()
             if (tim->GetBoxCollider2D(0).IsColliding(player->GetBoxCollider2D(1)))
             {
                 std::cout << "2: Is colliding\n";
+                CollisionSound->PlaySound();
             }
             else {
                 std::cout << "2: Not colliding\n";
@@ -142,7 +147,7 @@ int main(int argc, char* argv[])
 {
     // Setup the SDLApp
     const char* title = "SDL2 Abstraction";
-    app = new SDLApp(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480);
+    app = new SDLApp(SDL_INIT_VIDEO | SDL_INIT_AUDIO, title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480);
     app->SetMaxFrameRate(4);
 
     // Create any objects in our scene
@@ -156,6 +161,10 @@ int main(int argc, char* argv[])
     tim->AddTexturedRectangleComponent("./assets/tim_still.bmp", 255, 255, 255);
     tim->AddBoxCollider2D();
 
+    // Setup sounds
+    CollisionSound = new Sound("./assets/sfx/bruh.wav"); //
+    CollisionSound->SetupDevice();  // TODO: Refactor. Now I have to instance a sound each time.
+
     // Set callback functions
     app->SetEventCallback(HandleEvents);
     app->SetUpdateCallback(HandleUpdate);
@@ -168,6 +177,7 @@ int main(int argc, char* argv[])
     delete app;
     delete player;
     delete tim;
+    delete CollisionSound;
 
     return 0;
 }

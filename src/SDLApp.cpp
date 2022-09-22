@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-SDLApp::SDLApp(const char* title, int x, int y, int w, int h)
+SDLApp::SDLApp(Uint32 subsystemsFlags, const char* title, int x, int y, int w, int h)
 {
     m_width = w;
     m_height = h;
