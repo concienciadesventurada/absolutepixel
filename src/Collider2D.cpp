@@ -48,7 +48,7 @@ void Collider2D::SetDimensions(int w, int h)
         m_colliderRectangle->w = w;
 }
 
-int Collider2D::GetPositionX()
+/* int Collider2D::GetPositionX()
 {
         return m_colliderRectangle->x;
 }
@@ -56,7 +56,7 @@ int Collider2D::GetPositionX()
 int Collider2D::GetPositionY()
 {
         return m_colliderRectangle->y;
-}
+} */
 
 void Update()
 {

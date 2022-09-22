@@ -33,11 +33,20 @@ void HandleEvents()
         {   //tim->GetCollider2D().IsColliding(player->GetCollider2D())
             if (tim->GetCollider2D(0).IsColliding(player->GetCollider2D(0)))
             {
-                std::cout << "Is colliding\n";
+                std::cout << "1: Is colliding\n";
             }
             else {
-                std::cout << "Not colliding\n";
+                std::cout << "1: Not colliding\n";
             }
+
+            if (tim->GetCollider2D(0).IsColliding(player->GetCollider2D(1)))
+            {
+                std::cout << "2: Is colliding\n";
+            }
+            else {
+                std::cout << "2: Not colliding\n";
+            }
+
         }
 
     }
@@ -49,8 +58,18 @@ void HandleUpdate()
     player->Update();
     tim->Update();
 
-    player->GetCollider2D(0);
-    tim->GetCollider2D(1);
+    // Primera caja de colisiones, cuerpo completo
+    player->GetCollider2D(0).SetAbsolutePosition(player->GetSprite().GetPositionX(), player->GetSprite().GetPositionY());
+    player->GetCollider2D(0).SetDimensions(player->GetSprite().GetWidth(), player->GetSprite().GetHeight());
+
+    // Segunda caja de colisiones
+    player->GetCollider2D(1).SetAbsolutePosition(player->GetSprite().GetPositionX(),
+                                           player->GetSprite().GetPositionY()+player->GetSprite().GetHeight()/2);
+    player->GetCollider2D(1).SetDimensions(player->GetSprite().GetWidth(),
+                                             player->GetSprite().GetHeight()/2);
+    
+    tim->GetCollider2D(0).SetAbsolutePosition(tim->GetSprite().GetPositionX(), tim->GetSprite().GetPositionY());
+    tim->GetCollider2D(0).SetDimensions(tim->GetSprite().GetWidth(), tim->GetSprite().GetHeight());
 }
 
 void HandleRendering()
@@ -120,7 +139,10 @@ int main(int argc, char* argv[])
     // Create any objects in our scene
     player = new GameEntity(app->GetRenderer());
     player->AddTexturedRectangleComponent("./assets/player_still.bmp");
+    // Adds colliders
     player->AddCollider2D();
+    player->AddCollider2D();
+
     tim = new GameEntity(app->GetRenderer());
     tim->AddTexturedRectangleComponent("./assets/tim_still.bmp", 255, 255, 255);
     tim->AddCollider2D();

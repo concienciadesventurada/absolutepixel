@@ -9,9 +9,12 @@
 TexturedRectangle::TexturedRectangle(SDL_Renderer* renderer, std::string filepath) 
 {
     SDL_Surface* retrieveSurface = ResourceManager::GetInstance().GetSurface(filepath);
+    SDL_SetColorKey(retrieveSurface, SDL_FALSE, SDL_MapRGB(retrieveSurface->format, 0xFF, 0x00, 0xFF));
+
     m_texture = SDL_CreateTextureFromSurface(renderer, retrieveSurface);
-//    SDL_FreeSurface(retrieveSurface); // EJERCICIO: Crear un m�todo que libere la memoria
     InitDefaults();
+
+    // TODO: Create a memory to free space
 }
 
 TexturedRectangle::TexturedRectangle(SDL_Renderer* renderer, std::string filepath, int redColorKey, int greenColorKey, int blueColorKey)
@@ -43,7 +46,8 @@ void TexturedRectangle::InitDefaults()
 
 
 // Destructor
-TexturedRectangle::~TexturedRectangle() {
+TexturedRectangle::~TexturedRectangle() 
+{
     SDL_DestroyTexture(m_texture);
 }
 
@@ -79,7 +83,8 @@ int TexturedRectangle::GetHeight()
     return m_rectangle.h;
 }
 
-void TexturedRectangle::Update() {
+void TexturedRectangle::Update() 
+{
 
 }
 

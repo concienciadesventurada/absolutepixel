@@ -23,9 +23,9 @@ public:
 
     void SetDimensions(int w, int h);
 
-    // Retrieve positions.
+/*     // Retrieve positions.
     int GetPositionX();
-    int GetPositionY();
+    int GetPositionY(); */
 
     // Just to standarize the API and make things easier along the way
     void Update();

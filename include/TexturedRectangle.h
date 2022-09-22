@@ -1,4 +1,6 @@
-#pragma once
+#ifndef TEXTUREDRECTANGLE_HPP
+#define TEXTUREDRECTANGLE_HPP
+
 #include <string>
 
 // Third Party
@@ -40,3 +42,5 @@ private:
 
     int m_redColorKey, m_greenColorKey, m_blueColorKey;
 };
+
+#endif
