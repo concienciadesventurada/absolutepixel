@@ -26,17 +26,25 @@ public:
 	// Adding components
 	void AddTexturedRectangleComponent(std::string spritepath);
 	void AddTexturedRectangleComponent(std::string spritepath, int redColorKey, int greenColorKey, int blueColorKey);
-	void AddCollider2D();
+	void AddBoxCollider2D();
 
 	//  Retrieve components
 	TexturedRectangle& GetSprite();
-	Collider2D& GetCollider2D(size_t index);
+	BoxCollider2D& GetBoxCollider2D(size_t index);
+
+	// Note: Sets the position of our game entity
+	//       This operates by moving all of the
+	//       Components position as well so they are
+	//       updated.   
+	void SetPosition(int x, int y); 
+	// Sets all of the components to a specified dimension
+	void SetDimensions(int w, int h); 
 
 private:
 	TexturedRectangle* m_sprite;
 	SDL_Renderer* m_renderer;
 
-	std::vector<Collider2D*> m_colliders;
+	std::vector<BoxCollider2D*> m_colliders;
 };
 
 #endif // !GAMEOBJECT_H

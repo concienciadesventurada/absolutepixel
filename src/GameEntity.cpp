@@ -37,11 +37,6 @@ void GameEntity::Update()
 			int w = m_sprite->GetWidth();
 			int h = m_sprite->GetHeight();
 
-			if (nullptr != m_colliders)
-			{
-				m_colliders->SetAbsolutePosition(x, y);
-				m_colliders->SetDimensions(w, h);
-			}
 		} */
 }
 
@@ -74,9 +69,9 @@ void GameEntity::AddTexturedRectangleComponent(std::string spritepath, int redCo
 
 }
 
-void GameEntity::AddCollider2D()
+void GameEntity::AddBoxCollider2D()
 {
-	m_colliders.push_back(new Collider2D());
+	m_colliders.push_back(new BoxCollider2D());
 }
 
 
@@ -85,7 +80,38 @@ TexturedRectangle& GameEntity::GetSprite()
 	return *m_sprite;
 }
 
-Collider2D& GameEntity::GetCollider2D(size_t index)
+BoxCollider2D& GameEntity::GetBoxCollider2D(size_t index)
 {
 	return *m_colliders[index];
+}
+
+// Sets all of the components to a specified dimension
+void GameEntity::SetPosition(int x, int y)
+{
+    if	(nullptr!=m_sprite)
+	{
+        m_sprite->SetPosition(x,y);
+    }
+    
+	for	(int i=0; i < m_colliders.size();i++)
+	{
+        if	(nullptr != m_colliders[i])
+		{
+            m_colliders[i]->SetAbsolutePosition(x, y);
+        }
+    }
+}
+void GameEntity::SetDimensions(int w, int h)
+{
+    if	(nullptr != m_sprite)
+	{
+        m_sprite->SetDimensions(w, h);
+    }
+    for	(int i=0; i < m_colliders.size();i++)
+	{
+        if	(nullptr != m_colliders[i])
+		{
+            m_colliders[i]->SetDimensions(w, h);
+        }
+    }
 }

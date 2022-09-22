@@ -33,6 +33,4 @@ private:
 
 };
 
-
 #endif // !ANIMATED_SPRITE.H
-

@@ -7,6 +7,8 @@
 #include "TexturedRectangle.h"
 #include "AnimatedSprite.h"
 #include "GameEntity.h"
+#include "Vector2D.h"
+#include "ResourceManager.h"
 
 // One possibility of creating as a global our app
 SDLApp* app;
@@ -31,7 +33,7 @@ void HandleEvents()
         // button is pressed
         if (event.button.button == SDL_BUTTON_LEFT) 
         {   //tim->GetCollider2D().IsColliding(player->GetCollider2D())
-            if (tim->GetCollider2D(0).IsColliding(player->GetCollider2D(0)))
+            if (tim->GetBoxCollider2D(0).IsColliding(player->GetBoxCollider2D(0)))
             {
                 std::cout << "1: Is colliding\n";
             }
@@ -39,7 +41,7 @@ void HandleEvents()
                 std::cout << "1: Not colliding\n";
             }
 
-            if (tim->GetCollider2D(0).IsColliding(player->GetCollider2D(1)))
+            if (tim->GetBoxCollider2D(0).IsColliding(player->GetBoxCollider2D(1)))
             {
                 std::cout << "2: Is colliding\n";
             }
@@ -58,28 +60,7 @@ void HandleUpdate()
     player->Update();
     tim->Update();
 
-    // Primera caja de colisiones, cuerpo completo
-    player->GetCollider2D(0).SetAbsolutePosition(player->GetSprite().GetPositionX(), player->GetSprite().GetPositionY());
-    player->GetCollider2D(0).SetDimensions(player->GetSprite().GetWidth(), player->GetSprite().GetHeight());
-
-    // Segunda caja de colisiones
-    player->GetCollider2D(1).SetAbsolutePosition(player->GetSprite().GetPositionX(),
-                                           player->GetSprite().GetPositionY()+player->GetSprite().GetHeight()/2);
-    player->GetCollider2D(1).SetDimensions(player->GetSprite().GetWidth(),
-                                             player->GetSprite().GetHeight()/2);
-    
-    tim->GetCollider2D(0).SetAbsolutePosition(tim->GetSprite().GetPositionX(), tim->GetSprite().GetPositionY());
-    tim->GetCollider2D(0).SetDimensions(tim->GetSprite().GetWidth(), tim->GetSprite().GetHeight());
-}
-
-void HandleRendering()
-{
-    // Set draw positions and size
-    player->GetSprite().SetPosition(app->GetMouseX(), app->GetMouseY());
-    player->GetSprite().SetDimensions(128, 128);
-
     // DVD Screensaver effect.
-
     static int posX = 0, posY = 0;
     static bool up = true, right = true;
 
@@ -119,10 +100,38 @@ void HandleRendering()
         up = true;
     }
 
-    tim->GetSprite().SetPosition(posX, posY);
-    tim->GetSprite().SetDimensions(128, 128);
+    // Set draw positions and size
+    player->SetPosition(app->GetMouseX(), app->GetMouseY());
+    player->SetDimensions(128, 128);
 
+    tim->SetPosition(posX, posY);
+    tim->SetDimensions(128, 128);
 
+    player->GetBoxCollider2D(1).SetDimensions(player->GetSprite().GetWidth(), player->GetSprite().GetHeight() / 2);
+    
+    Vector2D dims = player->GetBoxCollider2D(0).SetBoundingBoxAuto(ResourceManager::GetInstance().GetSurface("./assets/player_still.bmp"),0xFF,0x00,0xFF);
+
+    int newXPos = dims.x + app->GetMouseX(); 
+    int newYPos = dims.y + app->GetMouseY();
+
+    player->GetBoxCollider2D(0).SetAbsolutePosition(newXPos, newYPos);
+/* 
+    // Primera caja de colisiones, cuerpo completo
+    player->GetCollider2D(0).SetAbsolutePosition(player->GetSprite().GetPositionX(), player->GetSprite().GetPositionY());
+    player->GetCollider2D(0).SetDimensions(player->GetSprite().GetWidth(), player->GetSprite().GetHeight());
+
+    // Segunda caja de colisiones
+    player->GetCollider2D(1).SetAbsolutePosition(player->GetSprite().GetPositionX(), player->GetSprite().GetPositionY()+player->GetSprite().GetHeight()/2);
+    player->GetCollider2D(1).SetDimensions(player->GetSprite().GetWidth(), player->GetSprite().GetHeight()/2);
+    
+    tim->GetCollider2D(0).SetAbsolutePosition(tim->GetSprite().GetPositionX(), tim->GetSprite().GetPositionY());
+    tim->GetCollider2D(0).SetDimensions(tim->GetSprite().GetWidth(), tim->GetSprite().GetHeight());
+ */
+
+}
+
+void HandleRendering()
+{
     // Render our objects
     player->Render();
     tim->Render();
@@ -140,12 +149,12 @@ int main(int argc, char* argv[])
     player = new GameEntity(app->GetRenderer());
     player->AddTexturedRectangleComponent("./assets/player_still.bmp");
     // Adds colliders
-    player->AddCollider2D();
-    player->AddCollider2D();
+    player->AddBoxCollider2D();
+    player->AddBoxCollider2D();
 
     tim = new GameEntity(app->GetRenderer());
     tim->AddTexturedRectangleComponent("./assets/tim_still.bmp", 255, 255, 255);
-    tim->AddCollider2D();
+    tim->AddBoxCollider2D();
 
     // Set callback functions
     app->SetEventCallback(HandleEvents);
