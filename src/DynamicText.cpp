@@ -11,10 +11,10 @@ DynamicText::DynamicText(std::string fontFilePath, size_t fontSize)
     if(!s_ttfInitialized && TTF_Init() == -1)
     {
         std::cout << "SDL could not be initialized: " << SDL_GetError();
-    }
-    else
+    } 
+    else if (!s_ttfInitialized)
     {
-        //std::cout << "SDL text system is ready to go\n";
+        std::cout << "SDL text system is ready to go\n";
         // Initialize TTF system once in a singleton pattern design.
         s_ttfInitialized = true;
     }

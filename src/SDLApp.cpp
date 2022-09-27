@@ -12,10 +12,10 @@ SDLApp::SDLApp(Uint32 subsystemsFlags, const char* title, int x, int y, int w, i
 
     // Initialize the video subsystem.
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-        std::cout << "SDL could not be initialized: " <<
-            SDL_GetError();
+        std::cout << "SDL could not be initialized: " << SDL_GetError();
     }
-    else {
+    else if (SDL_Init(SDL_INIT_VIDEO) == 1)
+    {
         std::cout << "SDL video system is ready to go\n";
     }
     
