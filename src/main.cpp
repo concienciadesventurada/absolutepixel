@@ -10,6 +10,7 @@
 #include "Vector2D.h"
 #include "ResourceManager.h"
 #include "Sound.h"
+#include "DynamicText.h"
 
 // One possibility of creating as a global our app
 SDLApp* app;
@@ -140,6 +141,13 @@ void HandleRendering()
     // Render our objects
     player->Render();
     tim->Render();
+
+    // Rendering text after objects is a common practice
+    DynamicText text1("./assets/fonts/8bitOperatorPlus8-Regular.ttf", 12);
+    text1.DrawText(app->GetRenderer(), "Mira Chico Migrana, soy el logo del dvd", 0, 0, 640, 128);
+
+    DynamicText text2("./assets/fonts/8bitOperatorPlus8-Regular.ttf", 12);
+    text2.DrawText(app->GetRenderer(), "No ql no", app->GetMouseX(), app->GetMouseY(), 128, 64);
 }
 
 
