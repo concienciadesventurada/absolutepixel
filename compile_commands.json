@@ -1,0 +1,152 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-c",
+      "-g",
+      "-std=c++17",
+      "-I./include",
+      "-o",
+      "./bin/prog",
+      "./src/AnimatedSprite.cpp"
+    ],
+    "directory": "/home/matias/git/absolutepixel",
+    "file": "/home/matias/git/absolutepixel/src/AnimatedSprite.cpp",
+    "output": "/home/matias/git/absolutepixel/bin/prog"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-c",
+      "-g",
+      "-std=c++17",
+      "-I./include",
+      "-o",
+      "./bin/prog",
+      "./src/Collider2D.cpp"
+    ],
+    "directory": "/home/matias/git/absolutepixel",
+    "file": "/home/matias/git/absolutepixel/src/Collider2D.cpp",
+    "output": "/home/matias/git/absolutepixel/bin/prog"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-c",
+      "-g",
+      "-std=c++17",
+      "-I./include",
+      "-o",
+      "./bin/prog",
+      "./src/DynamicText.cpp"
+    ],
+    "directory": "/home/matias/git/absolutepixel",
+    "file": "/home/matias/git/absolutepixel/src/DynamicText.cpp",
+    "output": "/home/matias/git/absolutepixel/bin/prog"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-c",
+      "-g",
+      "-std=c++17",
+      "-I./include",
+      "-o",
+      "./bin/prog",
+      "./src/GameEntity.cpp"
+    ],
+    "directory": "/home/matias/git/absolutepixel",
+    "file": "/home/matias/git/absolutepixel/src/GameEntity.cpp",
+    "output": "/home/matias/git/absolutepixel/bin/prog"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-c",
+      "-g",
+      "-std=c++17",
+      "-I./include",
+      "-o",
+      "./bin/prog",
+      "./src/KeyboardController.cpp"
+    ],
+    "directory": "/home/matias/git/absolutepixel",
+    "file": "/home/matias/git/absolutepixel/src/KeyboardController.cpp",
+    "output": "/home/matias/git/absolutepixel/bin/prog"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-c",
+      "-g",
+      "-std=c++17",
+      "-I./include",
+      "-o",
+      "./bin/prog",
+      "./src/main.cpp"
+    ],
+    "directory": "/home/matias/git/absolutepixel",
+    "file": "/home/matias/git/absolutepixel/src/main.cpp",
+    "output": "/home/matias/git/absolutepixel/bin/prog"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-c",
+      "-g",
+      "-std=c++17",
+      "-I./include",
+      "-o",
+      "./bin/prog",
+      "./src/ResourceManager.cpp"
+    ],
+    "directory": "/home/matias/git/absolutepixel",
+    "file": "/home/matias/git/absolutepixel/src/ResourceManager.cpp",
+    "output": "/home/matias/git/absolutepixel/bin/prog"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-c",
+      "-g",
+      "-std=c++17",
+      "-I./include",
+      "-o",
+      "./bin/prog",
+      "./src/SDLApp.cpp"
+    ],
+    "directory": "/home/matias/git/absolutepixel",
+    "file": "/home/matias/git/absolutepixel/src/SDLApp.cpp",
+    "output": "/home/matias/git/absolutepixel/bin/prog"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-c",
+      "-g",
+      "-std=c++17",
+      "-I./include",
+      "-o",
+      "./bin/prog",
+      "./src/Sound.cpp"
+    ],
+    "directory": "/home/matias/git/absolutepixel",
+    "file": "/home/matias/git/absolutepixel/src/Sound.cpp",
+    "output": "/home/matias/git/absolutepixel/bin/prog"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-c",
+      "-g",
+      "-std=c++17",
+      "-I./include",
+      "-o",
+      "./bin/prog",
+      "./src/TexturedRectangle.cpp"
+    ],
+    "directory": "/home/matias/git/absolutepixel",
+    "file": "/home/matias/git/absolutepixel/src/TexturedRectangle.cpp",
+    "output": "/home/matias/git/absolutepixel/bin/prog"
+  }
+]

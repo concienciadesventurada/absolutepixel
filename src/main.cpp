@@ -12,6 +12,10 @@
 #include "Sound.h"
 #include "DynamicText.h"
 #include "GameState.h"
+#include "KeyboardController.h"
+
+// DOS PROBLEMAS DE DECLARACION EN EL KEYBOARD
+
 
 // One possibility of creating as a global our app
 SDLApp* app;
@@ -24,6 +28,9 @@ GameEntity* ball;
 Sound* CollisionSound;
 Sound* ScoreSound;
 
+KeyboardController* playerLeft;
+KeyboardController* playerRight;
+
 GameState* gameState;
 
 void HandleEvents() 
@@ -31,63 +38,37 @@ void HandleEvents()
     SDL_Event event;
 
     // (1) Handle Input --- Start our event loop
-    while (SDL_PollEvent(&event)) {
+    while (SDL_PollEvent(&event)) 
+    {
         // Handle each specific event
 
-        if (event.type == SDL_QUIT) {
+        if (event.type == SDL_QUIT) 
+        {
             app->StopAppLoop();
         }
 
-        if (event.type == SDL_KEYDOWN)
+        playerLeft->UpdateKeyboardEvent(event, leftPaddle, gameState);
+        playerRight->UpdateKeyboardEvent(event, rightPaddle, gameState);
+
+
+        //rightPaddle->GetCollider2D().IsColliding(leftPaddle->GetCollider2D())
+        if (rightPaddle->GetBoxCollider2D(0).IsColliding(leftPaddle->GetBoxCollider2D(0)))
         {
-            // When a key is pressed, will retrieve the paddle's positions
-            int leftPaddleX = leftPaddle->GetSprite().GetPositionX();
-            int leftPaddleY = leftPaddle->GetSprite().GetPositionY();
-
-            int rightPaddleX = rightPaddle->GetSprite().GetPositionX();
-            int rightPaddleY = rightPaddle->GetSprite().GetPositionY();
-
-            if (event.key.keysym.sym == SDLK_w)
-            {   
-                leftPaddleY -= gameState->movementSpeed;
-                leftPaddle->SetPosition(leftPaddleX, leftPaddleY);
-            }
-            else if (event.key.keysym.sym == SDLK_s)
-            {
-                leftPaddleY += gameState->movementSpeed;    
-                leftPaddle->SetPosition(leftPaddleX, leftPaddleY);
-            }
-
-            else if (event.key.keysym.sym == SDLK_UP)
-            {   
-                rightPaddleY -= gameState->movementSpeed;
-                rightPaddle->SetPosition(rightPaddleX, rightPaddleY);
-            }
-            else if (event.key.keysym.sym == SDLK_DOWN)
-            {
-                rightPaddleY += gameState->movementSpeed;
-                rightPaddle->SetPosition(rightPaddleX, rightPaddleY);
-            }
+            std::cout << "1: Is colliding\n";
+            CollisionSound->PlaySound();
+        }
+        else {\
+            std::cout << "1: Not colliding\n";
         }
 
-          //rightPaddle->GetCollider2D().IsColliding(leftPaddle->GetCollider2D())
-            if (rightPaddle->GetBoxCollider2D(0).IsColliding(leftPaddle->GetBoxCollider2D(0)))
-            {
-                std::cout << "1: Is colliding\n";
-                CollisionSound->PlaySound();
-            }
-            else {
-                std::cout << "1: Not colliding\n";
-            }
-
-            if (rightPaddle->GetBoxCollider2D(0).IsColliding(leftPaddle->GetBoxCollider2D(1)))
-            {
-                std::cout << "2: Is colliding\n";
-                CollisionSound->PlaySound();
-            }
-            else {
-                std::cout << "2: Not colliding\n";
-            }
+        if (rightPaddle->GetBoxCollider2D(0).IsColliding(leftPaddle->GetBoxCollider2D(1)))
+        {
+            std::cout << "2: Is colliding\n";
+            CollisionSound->PlaySound();
+        }
+        else {
+            std::cout << "2: Not colliding\n";
+        }
 
     }
 
@@ -173,66 +154,6 @@ void HandleUpdate()
     // TODO: RESET BALL IN THE CENTER AND DELAY IF A PLAYER SCORES 
     ball->SetPosition(ballXPosition, ballYPosition);
 
-
-/*     leftPaddle->Update();
-    rightPaddle->Update();
-
-    // DVD Screensaver effect.
-    static int posX = 0, posY = 0;
-    static bool up = true, right = true;
-
-    if (up)
-    {
-        --posY; // If the "modern" way, --posY, 
-    }
-    else
-    {
-        ++posY;
-    }
-
-    if (right)
-    {
-        ++posX;
-    }
-    else
-    {
-        --posX;
-    }
-
-    if (posX > app->GetWindowWidth())
-    {
-        right = false;
-    }
-    else if (posX < 0)
-    {
-        right = true;
-    }
-
-    if (posY < 0)
-    {
-        up = false;
-    }
-    else if (posY > app->GetWindowHeight())
-    {
-        up = true;
-    }
-
-    // Set draw positions and size
-    leftPaddle->SetPosition(app->GetMouseX(), app->GetMouseY());
-    leftPaddle->SetDimensions(128, 128);
-
-    rightPaddle->SetPosition(posX, posY);
-    rightPaddle->SetDimensions(128, 128);
-
-    leftPaddle->GetBoxCollider2D(1).SetDimensions(leftPaddle->GetSprite().GetWidth(), leftPaddle->GetSprite().GetHeight() / 2);
-    
-    Vector2D dims = leftPaddle->GetBoxCollider2D(0).SetBoundingBoxAuto(ResourceManager::GetInstance().GetSurface("./assets/leftPaddle_still.bmp"),0xFF,0x00,0xFF);
-
-    int newXPos = dims.x + app->GetMouseX(); 
-    int newYPos = dims.y + app->GetMouseY();
-
-    leftPaddle->GetBoxCollider2D(0).SetAbsolutePosition(newXPos, newYPos);
- */
 }
 
 void HandleRendering()
@@ -261,6 +182,9 @@ int main(int argc, char* argv[])
     const char* title = "Pong";
     app = new SDLApp(SDL_INIT_VIDEO | SDL_INIT_AUDIO, title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480);
     app->SetMaxFrameRate(32);
+
+    playerLeft = new KeyboardController(SDLK_w, SDLK_s);
+    playerRight = new KeyboardController(SDLK_h, SDLK_j);
 
     // Create any objects in our scene
     leftPaddle = new GameEntity(app->GetRenderer());
