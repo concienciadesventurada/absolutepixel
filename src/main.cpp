@@ -77,19 +77,26 @@ void HandleEvents()
 // To keep track and update collisions
 void HandleUpdate()
 {
-    // Setting collider dimensions - Esta las deja las colisiones chicas de 16x16, no se xq y tampoco en q momento, pero se ponen automaticas 
-    // y funcionan sin esta declaracion, la dejo pa irme a la segura si luego la necesito cuando refactorice el sist de colisiones
+    // Actualizan los valores de la posicion de la pelota cada frame
+    int ballXPosition = ball->GetSprite().GetPositionX();              
+    int ballYPosition = ball->GetSprite().GetPositionY();
 
-    /* leftPaddle->GetBoxCollider2D(0).SetDimensions(leftPaddle->GetSprite().GetWidth(), leftPaddle->GetSprite().GetWidth());
-    rightPaddle->GetBoxCollider2D(0).SetDimensions(rightPaddle->GetSprite().GetWidth(), rightPaddle->GetSprite().GetWidth( ));
-    ball->GetBoxCollider2D(0).SetDimensions(ball->GetSprite().GetWidth(), ball->GetSprite().GetWidth( ));*/
-
-    // Detectan la colision
-
+    // Detecta colision
     if (leftPaddle->GetBoxCollider2D(0).IsColliding(ball->GetBoxCollider2D(0)))
     {
         gameState->ballXDirection *= -1;
         CollisionSound->PlaySound();
+
+        // Detect where the collision happend - 100 en vez del alto, pero para que sea exactamente la mitad, si no, cambiar el resto por 100
+        int paddleMidPoint = leftPaddle->GetSprite().GetPositionY() + leftPaddle->GetSprite().GetHeight() / 2;
+        if (paddleMidPoint > ballYPosition) 
+        {
+          gameState->ballYDirection = -1;
+        }
+        else if (paddleMidPoint <= ballYPosition)
+        {
+          gameState->ballYDirection = 1;
+        }
     }
     if (rightPaddle->GetBoxCollider2D(0).IsColliding(ball->GetBoxCollider2D(0)))
     {
@@ -97,20 +104,16 @@ void HandleUpdate()
         CollisionSound->PlaySound();
     }
 
-
-    // Actualizan los valores de la posicion de la pelota cada frame
-    int ballXPosition = ball->GetSprite().GetPositionX();
-    int ballYPosition = ball->GetSprite().GetPositionY();
-
-    
     // BARRERAS DE LAS VENTANAS - SI CHOCA A LOS COSTADOS, SE SUMA AL MARCADOR
-    if (ballXPosition > app->GetWindowWidth())  // Se encarga de que, la bola, de izquierda a derecha, registre la colision y trayectoria hascia la derecha
+    if (ballXPosition > app->GetWindowWidth() + 100)  // Se encarga de que, la bola, de izquierda a derecha, registre la colision y trayectoria hascia la derecha
     {
         gameState->ballXDirection *= -1;
         gameState->leftScore++;
 
         ballXPosition = app->GetWindowWidth() / 2;
         ballYPosition = app->GetWindowHeight() / 2;
+
+        ScoreSound->PlaySound();
 /*         // TODO: Use ball dimensions instead of screen dimentions
         ballXPosition = app->GetWindowWidth() / ball->GetSprite().GetPositionX();
         ballYPosition = app->GetWindowHeight() / ball->GetSprite().GetPositionY(); */
@@ -122,6 +125,9 @@ void HandleUpdate()
 
         ballXPosition = app->GetWindowWidth() / 2;
         ballYPosition = app->GetWindowHeight() / 2;
+
+        ScoreSound->PlaySound();
+
     }
     
     if (ballYPosition > app->GetWindowHeight()) //X
@@ -154,6 +160,16 @@ void HandleUpdate()
     // TODO: RESET BALL IN THE CENTER AND DELAY IF A PLAYER SCORES 
     ball->SetPosition(ballXPosition, ballYPosition);
 
+    static int currentTime = SDL_GetTicks();
+    static int lastTime = SDL_GetTicks();
+
+    if (currentTime > lastTime + 1000)
+    {
+      ScoreSound->StopSound();
+      CollisionSound->StopSound();      
+      lastTime = currentTime;
+    }
+    
 }
 
 void HandleRendering()

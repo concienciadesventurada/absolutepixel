@@ -6,7 +6,7 @@
 struct GameState
 {;
     float movementSpeed;
-    float velocity;
+//    float velocity;
     float ballSpeed;
     int ballXDirection;
     int ballYDirection;

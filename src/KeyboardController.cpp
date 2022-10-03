@@ -27,18 +27,18 @@ void KeyboardController::UpdateKeyboardEvent(SDL_Event &event, GameEntity* entit
         }
     }
 
-    if (event.type == SDL_KEYUP)
-    {
-        int entityPosX = entity->GetSprite().GetPositionX();
-        int entityPosY = entity->GetSprite().GetPositionY();
-
-        if (event.key.keysym.sym == m_goUpKey)
-        {
-            gameState->movementSpeed = 0;
-        }
-        else if (event.key.keysym.sym == m_goDownKey)
-        {
-            gameState->movementSpeed = 0;
-        }
-    }
+//    if (event.type == SDL_KEYUP)
+//    {
+//        int entityPosX = entity->GetSprite().GetPositionX();
+//        int entityPosY = entity->GetSprite().GetPositionY();
+//
+//        if (event.key.keysym.sym == m_goUpKey)
+//        {
+//            gameState->movementSpeed = 0;
+//        }
+//        else if (event.key.keysym.sym == m_goDownKey)
+//        {
+//            gameState->movementSpeed = 0;
+//        }
+//    }
 }
